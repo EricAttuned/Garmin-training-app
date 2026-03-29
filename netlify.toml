@@ -1,1 +1,45 @@
-404: Not Found
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Strava OAuth
+[[redirects]]
+  from = "/api/strava-auth"
+  to = "/.netlify/functions/strava-auth"
+  status = 200
+
+[[redirects]]
+  from = "/api/strava-callback"
+  to = "/.netlify/functions/strava-callback"
+  status = 200
+
+[[redirects]]
+  from = "/api/strava-activities"
+  to = "/.netlify/functions/strava-activities"
+  status = 200
+
+# FIT file export
+[[redirects]]
+  from = "/api/generate-fit"
+  to = "/.netlify/functions/generate-fit"
+  status = 200
+
+# Training plan & data
+[[redirects]]
+  from = "/api/training-plan"
+  to = "/.netlify/functions/training-plan"
+  status = 200
+
+[[redirects]]
+  from = "/api/training-data"
+  to = "/.netlify/functions/training-data"
+  status = 200
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
