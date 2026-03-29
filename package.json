@@ -1,0 +1,17 @@
+{
+  "name": "garmin-training-app",
+  "version": "1.0.0",
+  "description": "Adaptive running training app with Garmin integration",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site — no build step'"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "oauth-1.0a": "^2.2.6",
+    "crypto-js": "^4.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

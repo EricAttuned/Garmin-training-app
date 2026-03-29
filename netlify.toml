@@ -1,0 +1,44 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Garmin OAuth
+[[redirects]]
+  from = "/api/garmin-auth"
+  to = "/.netlify/functions/garmin-auth"
+  status = 200
+
+[[redirects]]
+  from = "/api/garmin-callback"
+  to = "/.netlify/functions/garmin-callback"
+  status = 200
+
+[[redirects]]
+  from = "/api/garmin-activities"
+  to = "/.netlify/functions/garmin-activities"
+  status = 200
+
+[[redirects]]
+  from = "/api/garmin-push-workout"
+  to = "/.netlify/functions/garmin-push-workout"
+  status = 200
+
+# Training plan & data
+[[redirects]]
+  from = "/api/training-plan"
+  to = "/.netlify/functions/training-plan"
+  status = 200
+
+[[redirects]]
+  from = "/api/training-data"
+  to = "/.netlify/functions/training-data"
+  status = 200
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

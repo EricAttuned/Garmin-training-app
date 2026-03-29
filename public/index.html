@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0f172a">
+  <title>RunForge — Adaptive Training</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="header-left">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <h1>RunForge</h1>
+      </div>
+      <div class="header-right">
+        <button id="btn-garmin-status" class="btn-icon" title="Garmin Connection">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          <span class="status-dot disconnected"></span>
+        </button>
+        <button id="btn-settings" class="btn-icon" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </header>
+    <main id="main-content">
+      <section id="screen-setup" class="screen active">
+        <div class="setup-hero">
+          <div class="hero-icon"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="32" cy="14" r="6"/><path d="M22 56l4-18 6 8 6-8 4 18"/><path d="M18 30c4-4 8-6 14-6s10 2 14 6"/><path d="M26 38l-8 4M38 38l8 4"/></svg></div>
+          <h2>Build Your Training Plan</h2>
+          <p>Create an adaptive running plan that syncs structured workouts directly to your Garmin Fénix.</p>
+        </div>
+        <form id="form-create-plan" class="plan-form">
+          <div class="form-group"><label for="race-distance">Race Distance</label><select id="race-distance" required><option value="">Select distance...</option><option value="5k">5K</option><option value="10k">10K</option><option value="half">Half Marathon</option><option value="marathon">Marathon</option><option value="ultra50k">Ultra 50K</option></select></div>
+          <div class="form-group"><label for="race-date">Race Date</label><input type="date" id="race-date" required></div>
+          <div class="form-group"><label for="goal-time">Goal Time (optional)</label><div class="time-inputs"><input type="number" id="goal-hours" min="0" max="12" placeholder="H" class="time-input"><span class="time-sep">:</span><input type="number" id="goal-minutes" min="0" max="59" placeholder="MM" class="time-input"><span class="time-sep">:</span><input type="number" id="goal-seconds" min="0" max="59" placeholder="SS" class="time-input"></div></div>
+          <div class="form-row"><div class="form-group"><label for="days-per-week">Days / Week</label><select id="days-per-week"><option value="3">3 days</option><option value="4" selected>4 days</option><option value="5">5 days</option><option value="6">6 days</option><option value="7">7 days</option></select></div><div class="form-group"><label for="weekly-km">Current Weekly km</label><input type="number" id="weekly-km" min="5" max="200" placeholder="e.g. 30"></div></div>
+          <div class="form-group"><label>Recent Race (helps calibrate paces)</label><div class="form-row"><select id="recent-race-dist" class="flex-1"><option value="">None</option><option value="5k">5K</option><option value="10k">10K</option><option value="half">Half Marathon</option><option value="marathon">Marathon</option></select><div class="time-inputs compact"><input type="number" id="recent-h" min="0" max="12" placeholder="H" class="time-input small"><span class="time-sep">:</span><input type="number" id="recent-m" min="0" max="59" placeholder="MM" class="time-input small"><span class="time-sep">:</span><input type="number" id="recent-s" min="0" max="59" placeholder="SS" class="time-input small"></div></div></div>
+          <button type="submit" class="btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon-inline"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Generate Plan</button>
+        </form>
+      </section>
+      <section id="screen-dashboard" class="screen">
+        <div class="plan-summary" id="plan-summary"><div class="summary-race"><span class="race-badge" id="race-badge">HALF</span><div><div class="race-name" id="race-name">Half Marathon</div><div class="race-date-display" id="race-date-display">May 18, 2026</div></div></div><div class="summary-stats"><div class="stat"><span class="stat-value" id="stat-weeks">12</span><span class="stat-label">Weeks</span></div><div class="stat"><span class="stat-value" id="stat-vdot">45</span><span class="stat-label">VDOT</span></div><div class="stat"><span class="stat-value" id="stat-phase">Base</span><span class="stat-label">Phase</span></div></div></div>
+        <div id="insights-container" class="insights-container"></div>
+        <div class="section-header"><h2 id="week-title">This Week</h2><button id="btn-push-week" class="btn-small btn-garmin" title="Push week to Garmin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Push to Watch</button></div>
+        <div id="week-workouts" class="week-workouts"></div>
+        <div class="section-header"><h2>Full Plan</h2><div class="view-toggle"><button class="view-btn active" data-view="calendar">Calendar</button><button class="view-btn" data-view="list">List</button></div></div>
+        <div id="plan-calendar" class="plan-calendar"></div>
+        <div id="plan-list" class="plan-list" style="display:none"></div>
+        <div class="paces-card" id="paces-card"><h3>Your Training Paces</h3><div class="paces-grid" id="paces-grid"></div></div>
+        <div class="plan-actions"><button id="btn-adapt" class="btn-secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon-inline"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>Adapt Plan</button><button id="btn-new-plan" class="btn-outline">New Plan</button></div>
+      </section>
+      <section id="screen-workout" class="screen">
+        <button id="btn-back" class="btn-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        <div class="workout-detail"><div class="workout-date" id="workout-date"></div><h2 class="workout-title" id="workout-title"></h2><p class="workout-desc" id="workout-desc"></p><div class="workout-steps" id="workout-steps"></div><div class="workout-actions"><button id="btn-push-single" class="btn-primary btn-garmin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon-inline"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Push to Garmin</button><button id="btn-complete" class="btn-secondary">Mark Complete</button></div></div>
+      </section>
+      <section id="screen-settings" class="screen">
+        <button id="btn-back-settings" class="btn-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back</button>
+        <h2>Settings</h2>
+        <div class="settings-section"><h3>Garmin Connection</h3><div id="garmin-connection-status" class="connection-card"><div class="connection-info"><span class="connection-dot disconnected"></span><span>Not connected</span></div><button id="btn-connect-garmin" class="btn-primary">Connect Garmin</button></div></div>
+        <div class="settings-section"><h3>Units</h3><div class="toggle-row"><span>Distance Units</span><select id="setting-units"><option value="km" selected>Kilometers</option><option value="mi">Miles</option></select></div></div>
+        <div class="settings-section"><h3>Notifications</h3><div class="toggle-row"><span>Auto-push workouts</span><label class="toggle"><input type="checkbox" id="setting-autopush"><span class="toggle-slider"></span></label></div><div class="toggle-row"><span>Adapt plan weekly</span><label class="toggle"><input type="checkbox" id="setting-autoadapt" checked><span class="toggle-slider"></span></label></div></div>
+        <div class="settings-section"><h3>About</h3><p class="about-text">RunForge v1.0 — Adaptive training for Garmin runners. Built with heart rate science and periodization principles from Jack Daniels' Running Formula.</p></div>
+      </section>
+    </main>
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="nav-btn active" data-screen="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span>Plan</span></button>
+      <button class="nav-btn" data-screen="activities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Activity</span></button>
+      <button class="nav-btn" data-screen="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span>Settings</span></button>
+    </nav>
+  </div>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
